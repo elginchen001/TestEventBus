@@ -7,8 +7,15 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import test.elgin.darleer.com.testeventbus.R;
+import test.elgin.darleer.com.testeventbus.message.MessageEvent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +25,7 @@ import test.elgin.darleer.com.testeventbus.R;
  * Use the {@link MessageFragment1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MessageFragment1 extends android.support.v4.app.Fragment {
+public class MessageFragment1 extends android.support.v4.app.Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,6 +34,9 @@ public class MessageFragment1 extends android.support.v4.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView txtMessage1;
+    private Button btnSend;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,8 +75,37 @@ public class MessageFragment1 extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message_fragment1, container, false);
+        View view = inflater.inflate(R.layout.fragment_message_fragment1, container, false);
+        this.txtMessage1 = view.findViewById(R.id.txtMessage1);
+        this.btnSend = view.findViewById(R.id.btnSendMessage1);
+        this.btnSend.setOnClickListener(this);
+        return view;
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDealEventMessage(MessageEvent messageEvent)
+    {
+        this.txtMessage1.setText(messageEvent.getMessage());
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int vID = v.getId();
+        switch (vID)
+        {
+            case R.id.btnSendMessage1:
+            {
+                EventBus.getDefault().post(new MessageEvent("这是fragment1发送的消息！"));
+                //finish();
+            }
+                break;
+                default:
+                    break;
+        }
+    }
+
+    //region
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -106,4 +145,6 @@ public class MessageFragment1 extends android.support.v4.app.Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    //endregion
+
 }

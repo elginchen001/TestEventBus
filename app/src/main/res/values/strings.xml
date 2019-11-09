@@ -2,5 +2,6 @@
     <string name="app_name">TestEventBus</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">消息内容：</string>
+    <string name="hello_blank_fragment">收到消息：</string>
+    <string name="button_send_fragment">发送</string>
 </resources>
