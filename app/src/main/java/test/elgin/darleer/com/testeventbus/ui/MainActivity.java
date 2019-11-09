@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initFragments()
     {
+        //EventFragment类中不要有静态变量，否则只初始化一个对象。
         fragment2 = new EventFragment();
         fragment2.setClassName("fragment2");
         android.app.FragmentTransaction fragmentTransaction2 = getFragmentManager().beginTransaction();
@@ -95,9 +96,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragment1.setClassName("fragment1");
         android.app.FragmentTransaction fragmentTransaction1 = getFragmentManager().beginTransaction();
         fragmentTransaction1.add(R.id.frameLayout1,fragment1,"fragment1").show(fragment1).commit();
-        if(fragment1.equals(fragment2)) {
-            Toast.makeText(this,"fragment1:"+fragment1.FragmentName+";fragmeng2:"+fragment2.FragmentName,Toast.LENGTH_LONG).show();
-        }
-
     }
 }
