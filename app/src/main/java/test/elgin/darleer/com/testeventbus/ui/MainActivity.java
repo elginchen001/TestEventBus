@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initFragments()
     {
         fragment1 = new EventFragment();
+        fragment1.setClassName("fragment1");
+        getFragmentManager().beginTransaction().add(R.id.frameLayout1,fragment1,fragment1.getClass().getName()).commit();
         fragment2 = new EventFragment();
-        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.frameLayout1,fragment1,fragment1.getClass().getName());
-        fragmentTransaction.add(R.id.frameLayout2,fragment2,fragment2.getClass().getName());
-        fragmentTransaction.commit();
+        fragment2.setClassName("fragment2");
+        getFragmentManager().beginTransaction().add(R.id.frameLayout2,fragment2,fragment2.getClass().getName()).commit();
     }
 }

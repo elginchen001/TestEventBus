@@ -24,10 +24,15 @@ public class EventFragment extends Fragment {
 
     private TextView txtMessage;
     private Button btnSend;
-    private String FragmentName;
+    private static String FragmentName;
 
     public EventFragment() {
         // Required empty public constructor
+    }
+
+    public void setClassName(String s)
+    {
+        this.FragmentName = s;
     }
 
 
@@ -41,7 +46,7 @@ public class EventFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EventBus.getDefault().post(new MessageEvent("这是来自"+this.getClass().getName()+"的消息"));
+                        EventBus.getDefault().post(new MessageEvent("这是来自"+FragmentName+"的消息"));
                     }
                 }
         );
