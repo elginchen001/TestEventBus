@@ -18,17 +18,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import test.elgin.darleer.com.testeventbus.R;
 import test.elgin.darleer.com.testeventbus.message.MessageEvent;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        MessageFragment1.OnFragmentInteractionListener,
-        MessageFragment2.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
+{
     private Button btnReg;
     private Button btnSend, btnAdd;
     private EditText etxtMessage;
-    public int frameLayout1;
-    public int frameLayout2;
-
-    private MessageFragment1 mMessageFragment1;
-    private MessageFragment2 mMessageFragment2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(this);
         etxtMessage = (EditText) findViewById(R.id.etxtMessage);
-        frameLayout1 = R.id.frameLayout1;
-        frameLayout2 = R.id.frameLayout2;
-        initFragment();
     }
 
     @Override
@@ -51,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int vID = v.getId();
         switch (vID) {
             case R.id.btnReg:
-//                mMessageFragment1.bindFragment(mMessageFragment2);
-//                mMessageFragment2.bindFragment(mMessageFragment1);
                 EventBus.getDefault().register(this);
                 break;
             case R.id.btnSend:
@@ -63,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    private void onHandleEventMessage(MessageEvent messageEvent)
+    private void onMessageEvent(MessageEvent messageEvent)
     {
         this.etxtMessage.setText(messageEvent.getMessage());
     }
@@ -74,20 +63,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EventBus.getDefault().unregister(this);
     }
 
-    private void initFragment() {
-        try {
-            this.mMessageFragment1 = MessageFragment1.newInstance("frag1", "frag1");
-            this.mMessageFragment2 = MessageFragment2.newInstance("frag2", "frag2");
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            getSupportFragmentManager().beginTransaction().replace(frameLayout1, mMessageFragment1).commitNow();
-            getSupportFragmentManager().beginTransaction().replace(frameLayout2, mMessageFragment2).commitNow();
-        } catch (Exception e) {
-            Log.v("TAG", e.getMessage());
-        }
-    }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }
