@@ -1,5 +1,6 @@
 package test.elgin.darleer.com.testeventbus.ui;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -44,15 +45,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnReg:
                 EventBus.getDefault().register(this);
                 break;
-            case R.id.btnSend:
+            case R.id.btnAdd:
+                startActivity(new Intent(this,SecondActivity.class));
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * 必须要有@Subcribe注释
+     * 必须是public方法
+     * @param messageEvent
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    private void onMessageEvent(MessageEvent messageEvent)
+    public void onMessageEvent(MessageEvent messageEvent)
     {
         this.etxtMessage.setText(messageEvent.getMessage());
     }
