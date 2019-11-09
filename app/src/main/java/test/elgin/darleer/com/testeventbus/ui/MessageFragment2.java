@@ -130,13 +130,13 @@ public class MessageFragment2 extends android.support.v4.app.Fragment implements
     public void bindFragment(android.support.v4.app.Fragment fragment)
     {
         publiser = fragment;
-        EventBus.getDefault().register(publiser);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        EventBus.getDefault().unregister(publiser);
+        EventBus.getDefault().unregister(this);
         mListener = null;
     }
 

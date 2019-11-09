@@ -16,6 +16,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import test.elgin.darleer.com.testeventbus.R;
+import test.elgin.darleer.com.testeventbus.message.MessageEvent;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         MessageFragment1.OnFragmentInteractionListener,
@@ -42,20 +43,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etxtMessage = (EditText) findViewById(R.id.etxtMessage);
         frameLayout1 = R.id.frameLayout1;
         frameLayout2 = R.id.frameLayout2;
+        initFragment();
     }
 
     @Override
     public void onClick(View v) {
         int vID = v.getId();
         switch (vID) {
-            case R.id.btnAdd:
-                initFragment();
+            case R.id.btnReg:
+//                mMessageFragment1.bindFragment(mMessageFragment2);
+//                mMessageFragment2.bindFragment(mMessageFragment1);
+                EventBus.getDefault().register(this);
                 break;
-            case R.id.btnReg: {
-                mMessageFragment1.bindFragment(mMessageFragment2);
-                mMessageFragment2.bindFragment(mMessageFragment1);
-                break;
-            }
             case R.id.btnSend:
                 break;
             default:
@@ -63,10 +62,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    private void onHandleEventMessage(MessageEvent messageEvent)
+    {
+        this.etxtMessage.setText(messageEvent.getMessage());
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(mMessageFragment1);
+        EventBus.getDefault().unregister(this);
     }
 
     private void initFragment() {
@@ -80,16 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.v("TAG", e.getMessage());
         }
     }
-
-
-    /**
-     * Thread.MAIN 订阅者的事件处理函数在主线程（UI线程）执行，能够完成UI更新的操作，但耗时过长则会ANR
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onShowMessageEvent() {
-
-    }
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
