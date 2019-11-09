@@ -105,8 +105,6 @@ public class MessageFragment2 extends android.support.v4.app.Fragment implements
         }
     }
 
-
-
     //region
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -119,6 +117,7 @@ public class MessageFragment2 extends android.support.v4.app.Fragment implements
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        EventBus.getDefault().register(this);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -127,12 +126,19 @@ public class MessageFragment2 extends android.support.v4.app.Fragment implements
         }
     }
 
+    private android.support.v4.app.Fragment publiser;
+    public void bindFragment(android.support.v4.app.Fragment fragment)
+    {
+        publiser = fragment;
+        EventBus.getDefault().register(publiser);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
+        EventBus.getDefault().unregister(publiser);
         mListener = null;
     }
-
 
     /**
      * This interface must be implemented by activities that contain this

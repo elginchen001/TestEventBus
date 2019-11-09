@@ -51,9 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnAdd:
                 initFragment();
                 break;
-            case R.id.btnReg:
-                EventBus.getDefault().register(mMessageFragment1);
+            case R.id.btnReg: {
+                mMessageFragment1.bindFragment(mMessageFragment2);
+                mMessageFragment2.bindFragment(mMessageFragment1);
                 break;
+            }
             case R.id.btnSend:
                 break;
             default:
