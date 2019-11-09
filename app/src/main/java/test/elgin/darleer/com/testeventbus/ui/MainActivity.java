@@ -18,17 +18,26 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import test.elgin.darleer.com.testeventbus.R;
 import test.elgin.darleer.com.testeventbus.message.MessageEvent;
+import test.elgin.darleer.com.testeventbus.ui.fragment.EventFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     private Button btnReg;
     private Button btnSend, btnAdd;
     private EditText etxtMessage;
+    private EventFragment fragment1,fragment2;
+    private FrameLayout frameLayout1,frameLayout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
+        initFragments();
+    }
+
+    private void initViews()
+    {
         btnReg = findViewById(R.id.btnReg);
         btnReg.setOnClickListener(this);
         btnSend = findViewById(R.id.btnSend);
@@ -36,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(this);
         etxtMessage = (EditText) findViewById(R.id.etxtMessage);
+        frameLayout1 = findViewById(R.id.frameLayout1);
+        frameLayout2 = findViewById(R.id.frameLayout2);
     }
 
     @Override
@@ -47,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnAdd:
                 startActivity(new Intent(this,SecondActivity.class));
+                break;
+            case R.id.btnSend:
+                EventBus.getDefault().post(new MessageEvent(etxtMessage.getText().toString()));
                 break;
             default:
                 break;
@@ -70,5 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EventBus.getDefault().unregister(this);
     }
 
-
+    private void initFragments()
+    {
+        fragment1 = new EventFragment();
+        fragment2 = new EventFragment();
+        android.app.FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.frameLayout1,fragment1,fragment1.getClass().getName());
+        fragmentTransaction.add(R.id.frameLayout2,fragment2,fragment2.getClass().getName());
+        fragmentTransaction.commit();
+    }
 }
