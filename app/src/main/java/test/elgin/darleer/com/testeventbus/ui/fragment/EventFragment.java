@@ -22,9 +22,9 @@ import test.elgin.darleer.com.testeventbus.message.MessageEvent;
  */
 public class EventFragment extends Fragment {
 
-    private TextView txtMessage;
+    private TextView txtMessage,txtFragment;
     private Button btnSend;
-    private static String FragmentName;
+    public String FragmentName;
 
     public EventFragment() {
         // Required empty public constructor
@@ -41,6 +41,8 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         txtMessage = view.findViewById(R.id.txtMessage);
+        txtFragment = view.findViewById(R.id.txtFragment);
+        txtFragment.setText(FragmentName+"收到消息如下：");
         btnSend = view.findViewById(R.id.btnSendMessage);
         btnSend.setOnClickListener(
                 new View.OnClickListener() {

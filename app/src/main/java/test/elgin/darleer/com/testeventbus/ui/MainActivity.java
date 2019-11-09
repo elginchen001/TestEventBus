@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -86,11 +87,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initFragments()
     {
-        fragment1 = new EventFragment();
-        fragment1.setClassName("fragment1");
-        getFragmentManager().beginTransaction().add(R.id.frameLayout1,fragment1,fragment1.getClass().getName()).commit();
         fragment2 = new EventFragment();
         fragment2.setClassName("fragment2");
-        getFragmentManager().beginTransaction().add(R.id.frameLayout2,fragment2,fragment2.getClass().getName()).commit();
+        android.app.FragmentTransaction fragmentTransaction2 = getFragmentManager().beginTransaction();
+        fragmentTransaction2.add(R.id.frameLayout2,fragment2,"fragment2").show(fragment2).commit();
+        fragment1 = new EventFragment();
+        fragment1.setClassName("fragment1");
+        android.app.FragmentTransaction fragmentTransaction1 = getFragmentManager().beginTransaction();
+        fragmentTransaction1.add(R.id.frameLayout1,fragment1,"fragment1").show(fragment1).commit();
+        if(fragment1.equals(fragment2)) {
+            Toast.makeText(this,"fragment1:"+fragment1.FragmentName+";fragmeng2:"+fragment2.FragmentName,Toast.LENGTH_LONG).show();
+        }
+
     }
 }

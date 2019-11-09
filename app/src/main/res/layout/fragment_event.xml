@@ -20,6 +20,7 @@
         android:background="@color/colorPrimary" />
 
     <TextView
+        android:id="@+id/txtFragment"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
