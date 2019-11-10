@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * EventFragment类中不要有静态变量，否则只初始化一个对象。
-     * FragmentTransaction要定义两个
+     * FragmentTransaction要定义两个变量，否则报错
      */
     private void initFragments()
     {
