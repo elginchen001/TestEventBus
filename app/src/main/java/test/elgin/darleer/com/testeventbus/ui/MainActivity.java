@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * test git update
+     */
     private void initFragments()
     {
         //EventFragment类中不要有静态变量，否则只初始化一个对象。
