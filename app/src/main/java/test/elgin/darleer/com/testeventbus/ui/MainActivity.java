@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnSend:
                 EventBus.getDefault().post(new MessageEvent(etxtMessage.getText().toString()));
                 break;
+            case R.id.btnTest:
+
+                break;
             default:
                 break;
         }
@@ -83,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.v("TAG","second activity finished!");
     }
 
     /**

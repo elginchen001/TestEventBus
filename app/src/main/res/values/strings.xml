@@ -4,4 +4,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">收到消息如下：</string>
     <string name="button_send_fragment">发送</string>
+    <string name="button_text_fragment">测试</string>
 </resources>

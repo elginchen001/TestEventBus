@@ -4,6 +4,7 @@ package test.elgin.darleer.com.testeventbus.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import test.elgin.darleer.com.testeventbus.message.MessageEvent;
 public class EventFragment extends Fragment {
 
     private TextView txtMessage,txtFragment;
-    private Button btnSend;
+    private Button btnSend,btnTest;
     public String FragmentName;
 
     public EventFragment() {
@@ -40,6 +41,9 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event, container, false);
+        View v = this.getView();
+        if(v!=null)
+            Log.v("TAG",v.getClass().getName());
         txtMessage = view.findViewById(R.id.txtMessage);
         txtFragment = view.findViewById(R.id.txtFragment);
         txtFragment.setText(FragmentName+"收到消息如下：");
@@ -49,6 +53,15 @@ public class EventFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         EventBus.getDefault().post(new MessageEvent("这是来自"+FragmentName+"的消息"));
+                    }
+                }
+        );
+        btnTest = view.findViewById(R.id.btnTest);
+        btnTest.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.v("TAG",getView().getClass().toString());
                     }
                 }
         );
